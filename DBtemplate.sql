@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2013 at 07:37 PM
+-- Generation Time: Nov 04, 2013 at 07:41 PM
 -- Server version: 5.5.25
 -- PHP Version: 5.4.4
 
@@ -40,7 +40,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_locked` tinyint(1) NOT NULL,
   `admin_note` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `user`, `role`, `first_name`, `last_name`, `email`, `pass_hash`, `needs_forgot`, `forgot_timestamp`, `forgot_hash`, `is_locked`, `admin_note`) VALUES
+(1, 'Alexander', 1, 'Alexander', 'van Eck', 'a.vaneck@jcgroep.nl', '$2a$10$ko1T2iwS8R0rnBwS7P3ky.HYm2lU3s4zQgLcGyH/jt8fZopSX0jcW', 0, '0000-00-00 00:00:00', '', 0, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
