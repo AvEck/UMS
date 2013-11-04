@@ -86,7 +86,7 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
                     <input name="first_name" type="text" class="form-control" value="<?PHP echo $result->first_name ?>" required autofocus>
                     <input name="last_name" type="text" class="form-control top-join" value="<?PHP echo $result->last_name?>" required>
                     <input name="email" type="text" class="form-control independant" value="<?PHP echo $result->email ?>" required>
-                    <input name="pass" type="password" class="form-control independant" placeholder="Change your Password" required>
+                    <input name="pass" type="password" class="form-control independant" placeholder="Change your Password">
                     <input type="hidden" name="function" value="profile">
                     <button class="btn btn-lg btn-primary btn-block" type="submit">
                         Update Profile</button>
@@ -133,7 +133,7 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
                 <a href="register.php" class="btn btn-lg btn-primary btn-block newuser-list-btn">New User</a>
         </div>
         <div class="row">
-        <?PHP if (!empty($users)&&count($users)!=1) { ?>
+        <?PHP if (!empty($users)) { ?>
         <table class="table table-striped table-bordered ">
           <thead>
             <tr>
