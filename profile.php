@@ -133,7 +133,7 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
                 <a href="register.php" class="btn btn-lg btn-primary btn-block newuser-list-btn">New User</a>
         </div>
         <div class="row">
-        <?PHP if (!empty($users)) { ?>
+        <?PHP if (!empty($users)&&count($users)!=1) { ?>
         <table class="table table-striped table-bordered ">
           <thead>
             <tr>
