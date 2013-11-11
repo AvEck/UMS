@@ -59,35 +59,6 @@ class userManagement {
         return $user->pass_hash;
     }
 
-    public function verifyUser ($username, $password) {
-        //get the password from the database with the current user
-        $sth = $this->dbh->prepare('
-          SELECT
-            id, role, pass_hash, is_locked
-          FROM users
-          WHERE
-            user = :username
-          LIMIT 1
-          ');
-        //bind the username to the Query to prevent SQL injection
-        $sth->bindParam(':username', $username);
-        $sth->execute();
-        
-        $user = $sth->fetch(PDO::FETCH_OBJ);
-        if ($user == false) {
-            //User does not exist
-            return false;
-        }
-        //User does exist        
-        //Hashing the password with its hash as the salt returns the same hash
-        if ( crypt($password, $user->pass_hash) == $user->pass_hash ) {
-            //verification is succesful :)
-            return $user;
-        } else {
-            return false;  
-        }
-    }
-    
     public function getAllUsers($query = "all") {
         //get the password from the database with the current user
         if ($query=='all') {

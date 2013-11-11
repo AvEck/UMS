@@ -23,13 +23,16 @@
 //check if a form was used or if the user came from the EMAIL
 if ($_POST) {
     //user used a form
-    include ('UserManagement.php');
+    include_once ('UserManagement.php');
+    include_once ('functions.php');
     $usrMngr = new UserManagement();
+    $startTime = startTime();
     if (isset($_POST['email'])&&$_POST['email']!='') {
         
         //send email to user
         
-        $result = $usrMngr->sendForgotPassHash($_POST['email']); ?>
+        $result = $usrMngr->sendForgotPassHash($_POST['email']);
+        endTime($startTime,$_POST['email'], 'Requested Forgotten Pass, email sent'); ?>
             <div class="status-message">
                 <?PHP if ($result != false) { ?>
                 <p>An e-mail has been sent to your account</p>
@@ -46,10 +49,12 @@ if ($_POST) {
             <div class="status-message">
                 <p>Password was changed succesfully</p>
             </div>
+            <?PHP endTime($startTime,$_POST['e'], 'Reset password succesful'); ?>
         <?PHP } else { ?>
             <div class="status-message">
                 <p>Something went wrong<BR />Please try again later.</p>
             </div>
+            <?PHP endTime($startTime,$_POST['e'], 'Reset password NOT succesful :('); ?>
         <?PHP }
      } else {
         
@@ -70,7 +75,6 @@ if ($_POST) {
             <input type="hidden" name="e" value="<?PHP echo $_GET['e'] ?>">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Reset password</button>
         </form>
-    
     <?PHP } else { ?>
     <div class="status-message">
         <p>This link has expired.<BR /><a href='./forgot.php'>Try Again</a></p>

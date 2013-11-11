@@ -6,8 +6,10 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
     header ("Location: index.php");
     die();
 } else {
-    include ('UserManagement.php');
+    include_once ('UserManagement.php');
+    include_once ('functions.php');
     $usrMngr = new UserManagement();
+    $startTime = startTime();
     //if any info was updated
     if ($_POST) {
         if ($_POST['function']=='profile') {
@@ -17,12 +19,17 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
                 &&isset($_POST['email'])&&$_POST['email']!='') {
                 //update userInfo
                 $usrMngr->editInfo($_SESSION['userId'], $_POST['first_name'], $_POST['last_name'], $_POST['email']);
+                $msg = 'Updated userInfo';
             }
             //if the pass needs to be changed
             if (isset($_POST['pass'])&&$_POST['pass']!='') {
                 //update password
                 $usrMngr->editPass($_SESSION['userId'], $_POST['pass']);
+                $msg .= ' & Pass';
             }
+            
+            //update EndTime to dB
+            endTime($startTime,$_SESSION['userId'], $msg);
             
         } elseif ($_POST['function']=='user') {
             //print_r($_POST);
@@ -30,9 +37,11 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
             if ($_POST['submit']=="Send Pass") {
                 $usrMngr->sendForgotPassHash($_POST['email']);
                 $statusMessage = 'Email was Sent';
+                endTime($startTime,$_SESSION['userId'], 'Forgotten Password Email Sent to User '.$_POST['username']);
             } elseif ($_POST['submit']=="Delete") {
                 $usrMngr->deleteUser($_POST['id']);
                 $statusMessage = 'User was deleted';
+                endTime($startTime,$_SESSION['userId'], 'Admin deleted User '.$_POST['username']);
             } elseif (isset($_POST['id'])&&$_POST['id']!=''
                 &&isset($_POST['role'])&&$_POST['role']!=''
                 &&isset($_POST['username'])&&$_POST['username']!=''                
@@ -47,6 +56,7 @@ if ((!isset($_SESSION['login']) && $_SESSION['login'] == '')) {
                 //create the new user with the old pass if we need to
                 $usrMngr->createUser($_POST['role'],$_POST['username'],$_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['pass'],$_POST['lock']);
                 $statusMessage = 'User was updated';
+                endTime($startTime,$_SESSION['userId'], 'Admin updated User '.$_POST['username']);
             } else {
                 $statusMessage = 'Please fill all the fields';
             }

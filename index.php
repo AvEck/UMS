@@ -9,10 +9,12 @@ if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 
 //when user tries to log in.
 if ($_POST) {
+    include_once ('functions.php');
+    $startTime = startTime();
     if (isset($_POST['username']) && isset($_POST['password']) ) {
-        include ('UserManagement.php');
-        $usrMngr = new UserManagement();
-        $result = $usrMngr->verifyUser($_POST['username'], $_POST['password']);
+        //include_once ('UserManagement.php');
+        //$usrMngr = new UserManagement();
+        $result = verifyUser($_POST['username'], $_POST['password']);
         if($result != false) {
             //user has the right 
             //check if the users account is locked
@@ -21,19 +23,23 @@ if ($_POST) {
                 $_SESSION['userId'] = $result->id;
                 $_SESSION['role'] = $result->role;
                 $_SESSION['login'] = true;
+                endTime($startTime,$_POST['username'], 'Logged In');
                 header ("Location: profile.php");
                 die();  
             } else {
                 //account is locked.
+                endTime($startTime,$_POST['username'], 'Login Fail, Locked');
                 $locked = true;
             }
  
         } else {
             //login not succesful, wrong credentials
+            endTime($startTime,$_POST['username'], 'Login Fail, Wrong Credentials');
             $login = false;
         } 
     } else {
         //User didn't fill the form out correctly
+        endTime($startTime,$_POST['username'], 'Login Fail, Wrong form');
         $form = false;
     }
 }?>
