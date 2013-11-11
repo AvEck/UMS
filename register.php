@@ -13,9 +13,10 @@ if ((isset($_SESSION['login']) && $_SESSION['login'] != '')) {
 
 //check if the user can be created
 if ($_POST) {
-    include ('UserManagement.php');
+    include_once ('UserManagement.php');
+    include_once ('functions.php');
     $usrMngr = new UserManagement();
-        
+    $startTime = startTime();
     if (isset($_POST['username'])&&$_POST['username']!=''&&
         isset($_POST['first_name'])&&$_POST['first_name']!=''
         &&isset($_POST['last_name'])&&$_POST['last_name']!=''
@@ -29,6 +30,7 @@ if ($_POST) {
             }
             //update userInfo
         $usrMngr->createUser($role, $_POST['username'],$_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['pass'], 0);
+        endTime($startTime,$_POST['username'], 'User created');
         if (isset($isAdmin)&&$isAdmin==true) {
             
             //user is admin, because normal user would never be logged in and be in the the register screen
