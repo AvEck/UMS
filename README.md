@@ -8,6 +8,7 @@ Profile.php - The 'main' page of every account, the page determines whether the 
 Register.php - The register page is used to create new users, it is reused when an admin wants to add a new user<br />
 Logout.php - A small script which logs the user out of his session.<br />
 Forgot.php - The user is able to send himself a new password link with this page<br />
+Functions.php - Holds 3 functions, 2 to calculate and to store the action used and 1 to verify the login of the user.<br />
 <br />
 UserManagement.php - Everything that has anything to do with User Management is stored in this class. <br />
 Methods within the class can be used from all over the app to modify/delete/verify or resend password links<br />
